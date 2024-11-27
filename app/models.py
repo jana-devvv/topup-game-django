@@ -35,17 +35,20 @@ class Transaction(models.Model):
     def __str__(self):
         return f"Transaction {self.id} - {self.user.username}"
     
-class Payment(models.Model):
+class Payment(models.Model):    
     METHOD_CHOICES = [
-        ('EWALLET', 'E-Wallet'),
-        ('BANK_TRANSFER', 'Bank Transfer'),
-        ('CREDIT_CARD', 'Credit Card'),
+        ('gopay', 'GoPay'),
+        ('dana', 'Dana'),
+        ('ovo', 'OVO'),
+        ('shopeepay', 'ShopeePay'),
     ]
+
     transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE, related_name='payment')
-    method = models.CharField(max_length=20, choices=METHOD_CHOICES)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payments')
+    method = models.CharField(max_length=20, choices=METHOD_CHOICES, default='dana')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    is_verified = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, default='PENDING')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Payment {self.id} - {self.transaction.id}"
+        return f"Payment {self.transaction.id} - {self.status}"

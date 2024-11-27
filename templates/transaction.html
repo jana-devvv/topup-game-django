@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction</title>
+</head>
+<body>
+    <h1>Transaction Detail</h1>
+    <p>Game: {{ transaction.package.game.name }}</p>
+    <p>Package: {{ transaction.package.name }}</p>
+    <p>Status: {{ transaction.status }}</p>
+
+    {% if transaction.status == 'PENDING' %}
+        <a href="{% url 'payment' transaction_id=transaction.id %}">
+            <button>Pay</button>
+        </a>
+    {% endif %}
+
+    <a href="{% url 'main' %}">Back to Main</a>
+</body>
+</html>

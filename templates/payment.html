@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+</head>
+<body>
+    <h1>Choose Payment Method</h1>
+    <p>Game: {{ transaction.package.game.name }}</p>
+    <p>Package: {{ transaction.package.name }}</p>
+    <p>Player ID: {{ transaction.player_id }}</p>
+    <p>Server ID: {{ transaction.server_id }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="payment_method">Select Payment Method</label> <br>
+        <input type="radio" id="gopay" name="payment_method" value="gopay">
+        <label for="gopay">GoPay</label> <br>
+
+        <input type="radio" id="dana" name="payment_method" value="dana">
+        <label for="dana">Dana</label> <br>
+
+        <input type="radio" id="ovo" name="payment_method" value="ovo">
+        <label for="ovo">OVO</label> <br>
+
+        <input type="radio" id="shopeepay" name="payment_method" value="shopeepay">
+        <label for="shopeepay">ShopeePay</label> <br>
+
+        <button type="submit">Pay</button>
+    </form>
+
+    <a href="{% url 'main' %}">Back to Main</a>
+</body>
+</html>

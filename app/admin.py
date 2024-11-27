@@ -18,5 +18,5 @@ class TransactionAdmin(admin.ModelAdmin):
 
 @admin.register(Payment)
 class Paymentadmin(admin.ModelAdmin):
-    list_display = ('id', 'transaction', 'method', 'is_verified', 'created_at')
-    list_filter = ('method', 'is_verified')
+    list_display = ('id', 'transaction', 'method', 'status', 'created_at')
+    list_filter = ('method', 'status')
