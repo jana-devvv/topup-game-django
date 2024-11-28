@@ -4,7 +4,7 @@ from .models import Game, Package, Transaction, Payment
 # Register your models here.
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'description', 'image')
 
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):

@@ -30,10 +30,12 @@ def logout_view(req):
     logout(req)
     return redirect('login')
 
-@login_required
 def main_view(req):
     games = Game.objects.all()
     return render(req, 'main.html', {'games': games})
+
+def about_view(req):
+    return render(req, 'about.html')
 
 @login_required
 def package_view(req, id):

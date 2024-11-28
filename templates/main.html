@@ -4,15 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
 </head>
-<body>
-    <h1>Welcome {{ user.username }}</h1>
-    <h2>Available Games</h2>
-    <ul>
-        {% for game in games %}
-        <li><a href="{% url 'package' game.id %}">{{ game.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'logout' %}">Logout</a>
+<body class="bg-light">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-dark shadow-lg" data-bs-theme="dark">
+        <div class="container-fluid py-2 px-4">
+            <!-- Logo -->
+            <a class="navbar-brand fs-2" href="{% url 'main' %}"><b>JD</b>TOPUP</a>
+
+            <!-- Hamburger -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Nav Link -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5 fw-bold">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'main' %}">Home</a></li>
+                    <li class="nav-item me-4"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item d-lg-none d-block"><a class="nav-link" href="#">Profile</a></li>
+                        <li class="nav-item d-lg-none d-block"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item btn btn-sm btn-primary"><a class="nav-link text-white fw-bold" href="{% url 'register' %}">Sign Up</a></li>
+                        <li class="nav-item btn btn-sm btn-danger mt-3 mt-lg-0 ms-lg-3"><a class="nav-link text-white fw-bold" href="{% url 'login' %}">Sign In</a></li>
+                    {% endif %}
+                </ul>
+                {% if user.is_authenticated %}
+                    <div class="dropdown d-none d-lg-block">
+                        <img style="cursor: pointer;" src="{% static 'img/profile.jpg' %}" width="60" height="60" data-bs-toggle="dropdown" aria-expanded="false" class="dropdown-toggle rounded-circle" alt="Profile">
+                        <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+
+    <div class="container-fluid px-5 mt-5">
+        <h1 class="text-center">Welcome to <b>JD</b>TOPUP</h1>
+        <p class="text-center">Top Up, Play More, Worry Less</p>
+
+        <div class="mt-5">
+            <h2>Available Games</h2>
+            <div class="row mt-3 row-gap-5">
+                {% for game in games %}
+                <div class="col-md-3">
+                    <div class="card text-bg-light shadow-lg" style="width: 20rem;">
+                        {% if game.image %}
+                        <img src="{{ game.image.url }}" height="250" class="card-img-top" alt="{{ game.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                          <h5 class="card-title">{{ game.name }}</h5>
+                          <p class="card-text">{{ game.description }}</p>
+                          <a href="{% url 'package' id=game.id  %}" class="btn btn-primary">Visit</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
