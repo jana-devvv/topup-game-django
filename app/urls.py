@@ -9,8 +9,9 @@ urlpatterns = [
 
     # Main Views
     path('', views.main_view, name='main'),
+    path('history/', views.history_view, name='history'),
     path('about/', views.about_view, name='about'),
     path('game/<int:id>/', views.package_view, name='package'),
     path('transaction/<int:id>/', views.transaction_view, name='transaction'),
-    path('payment/<int:transaction_id>/', views.payment_view, name='payment')
+    path('payment/<int:transaction_id>/<str:status>', views.payment_view, name='payment')
 ]

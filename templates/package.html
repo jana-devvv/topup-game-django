@@ -1,25 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Package</title>
-</head>
-<body>
-    <h1>{{ game.name }}</h1>
-    <h2>Top-Up Packages</h2>
-    <form method="post">
-        {% csrf_token %}
-        <input type="hidden" name="game_id" value="{{ game.id }}">
-        <label for="player_id">Player ID</label><br>
-        <input type="text" id="player_id" name="player_id" placeholder="Enter your Player ID" required> <br> <br>
-        <label for="server_id">Server ID</label><br>
-        <input type="text" id="server_id" name="server_id" placeholder="Enter your Server ID" required> <br> <br>
-        {% for package in packages %}
-            <input type="radio" name="package_id" value="{{ package.id }}" required>
-            {{ package.name }} - ${{ package.price }} <br>
-        {% endfor %}
-        <button type="submit">Proceed</button>
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="player_id" class="form-label">Player ID:</label>
+                            {{ form.player_id }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="server_id" class="form-label">Server ID:</label>
+                            {{ form.server_id }}
+                        </div>
+                    
+                        <div class="mb-3">
+                            <p>{{ form.packages.label }}:</p>
+                            {% for option in form.packages %}
+                            <div class="form-check">
+                                {{ option.tag }}
+                                <label for="{{ option.id_for_label }}" class="form-check-label">{{ option.choice_label }} </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    
+                        <div>
+                            <button class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

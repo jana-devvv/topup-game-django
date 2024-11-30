@@ -1,22 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction</title>
-</head>
-<body>
-    <h1>Transaction Detail</h1>
-    <p>Game: {{ transaction.package.game.name }}</p>
-    <p>Package: {{ transaction.package.name }}</p>
-    <p>Status: {{ transaction.status }}</p>
+{% extends 'base.html' %} 
 
-    {% if transaction.status == 'PENDING' %}
-        <a href="{% url 'payment' transaction_id=transaction.id %}">
-            <button>Pay</button>
-        </a>
-    {% endif %}
-
-    <a href="{% url 'main' %}">Back to Main</a>
-</body>
-</html>
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Transaction Detail</h1>
+                    <p>Game: {{ transaction.package.game.name }}</p>
+                    <p>Package: {{ transaction.package.name }}</p>
+                    <p>Status: {{ transaction.status }}</p>
+                    
+                    {% if transaction.status == 'PENDING' %}
+                    <a href="{% url 'payment' transaction_id=transaction.id status='success' %}">
+                      <button class="btn btn-primary">Pay</button>
+                    </a>
+                    <a href="{% url 'payment' transaction_id=transaction.id status='failed' %}">
+                        <button class="btn btn-danger">Cancel</button>
+                    </a>
+                    {% endif %} 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,19 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
-    <h1>Register</h1>
+{% extends 'auth/auth.html' %}
+
+{% block content %}
+<div class="card shadow-lg p-4" style="width: 32rem;">
+    <h3 class="text-center mb-4">REGISTER</h3>
+
+    <!-- Menampilkan semua error dalam satu alert di atas form -->
+    {% if form.non_field_errors or form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+            
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
     <form method="post">
         {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" required> <br>
-        <input type="email" name="email" placeholder="Email" required> <br>
-        <input type="password" name="password" placeholder="Password" required> <br>
-        <button type="submit">Register</button>
+        
+        <!-- Username Field -->
+        <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        
+        <!-- Email Field -->
+        <div class="mb-3">  
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+
+        <!-- Password1 Field -->
+        <div class="mb-3">  
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+        </div>
+
+        <!-- Password2 Field -->
+        <div class="mb-3">  
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mt-3">Register</button>
     </form>
-    <a href="{% url 'login' %}">Already have an account? Login</a>
-</body>
-</html>
+
+    <p class="text-center mt-3">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+</div>
+{% endblock %}

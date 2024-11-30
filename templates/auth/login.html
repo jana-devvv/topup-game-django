@@ -1,21 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
+{% extends 'auth/auth.html' %}
+
+{% block content %}
+<div class="card shadow-lg p-4" style="width: 32rem;">
+    <h3 class="text-center mb-4">LOGIN</h3>
+
+    {% if form.non_field_errors or form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+            
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
     {% endif %}
+
     <form method="post">
         {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" required> <br>
-        <input type="password" name="password" placeholder="Password" required> <br>
-        <button type="submit">Login</button>
+        <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="mb-3">  
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
     </form>
-    <a href="{% url 'register' %}">Don't have an account? Register</a>
-</body>
-</html>
+
+    <p class="text-center mt-3">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+</div>
+{% endblock %}

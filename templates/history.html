@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <ul class="list-group">
+                {% for history in histories %}
+                <li class="list-group-item">
+                    {{ forloop.counter }}. {{ history.created_at }}
+                    <p class="mb-0">Player ID: {{ history.player_id }}</p>
+                    <p class="mb-0">Server ID: {{ history.server_id }}</p>
+                    <p class="mb-0">{{ history.package }}</p>
+                    <p class="badge {% if history.status == 'SUCCESS' %} text-bg-success {% elif history.status == 'FAILED' %} text-bg-danger {% else %} text-bg-primary {% endif %}">{{ history.status }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
